@@ -13,6 +13,8 @@ console.log('My Character is', world.character);
 
 
 
+
+
 window.addEventListener('keydown',(e) => {
   if (e.keyCode == 39 || e.keyCode == 68) {
     keyboard.RIGHT = true;
@@ -26,9 +28,9 @@ if (e.keyCode == 38 || e.keyCode == 87) {
 if (e.keyCode == 40 || e.keyCode == 83) {
     keyboard.DOWN = true;
 }
-
-
-console.log(e);
+if (e.keyCode == 32) {
+    keyboard.SPACE = true;   
+}
 });
 
 window.addEventListener('keyup',(e) => {
@@ -44,6 +46,8 @@ if (e.keyCode == 38 || e.keyCode == 87) {
 if (e.keyCode == 40 || e.keyCode == 83) {
     keyboard.DOWN = false;
 }
-console.log(e);
+if (e.keyCode == 32) {
+    keyboard.SPACE = false; 
+}
 });
 
