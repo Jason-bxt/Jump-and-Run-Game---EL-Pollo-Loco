@@ -1,30 +1,293 @@
 class Endboss extends MovableObject {
   IMAGES_WALKING = [
-    'img/4_enemie_boss_chicken/2_alert/G5.png',
-    'img/4_enemie_boss_chicken/2_alert/G6.png',
-    'img/4_enemie_boss_chicken/2_alert/G7.png',
-    'img/4_enemie_boss_chicken/2_alert/G8.png',
-    'img/4_enemie_boss_chicken/2_alert/G9.png',
-    'img/4_enemie_boss_chicken/2_alert/G10.png',
-    'img/4_enemie_boss_chicken/2_alert/G11.png',
-    'img/4_enemie_boss_chicken/2_alert/G12.png',
+    "img/4_enemie_boss_chicken/1_walk/G1.png",
+    "img/4_enemie_boss_chicken/1_walk/G2.png",
+    "img/4_enemie_boss_chicken/1_walk/G3.png",
+    "img/4_enemie_boss_chicken/1_walk/G4.png",
   ];
+
+  IMAGES_ALERT = [
+    "img/4_enemie_boss_chicken/2_alert/G5.png",
+    "img/4_enemie_boss_chicken/2_alert/G6.png",
+    "img/4_enemie_boss_chicken/2_alert/G7.png",
+    "img/4_enemie_boss_chicken/2_alert/G8.png",
+    "img/4_enemie_boss_chicken/2_alert/G9.png",
+    "img/4_enemie_boss_chicken/2_alert/G10.png",
+    "img/4_enemie_boss_chicken/2_alert/G11.png",
+    "img/4_enemie_boss_chicken/2_alert/G12.png",
+  ];
+
+  IMAGES_ATTACK = [
+    "img/4_enemie_boss_chicken/3_attack/G13.png",
+    "img/4_enemie_boss_chicken/3_attack/G14.png",
+    "img/4_enemie_boss_chicken/3_attack/G15.png",
+    "img/4_enemie_boss_chicken/3_attack/G16.png",
+    "img/4_enemie_boss_chicken/3_attack/G17.png",
+    "img/4_enemie_boss_chicken/3_attack/G18.png",
+    "img/4_enemie_boss_chicken/3_attack/G19.png",
+    "img/4_enemie_boss_chicken/3_attack/G20.png",
+  ];
+
+  IMAGES_HURT = [
+    "img/4_enemie_boss_chicken/4_hurt/G21.png",
+    "img/4_enemie_boss_chicken/4_hurt/G22.png",
+    "img/4_enemie_boss_chicken/4_hurt/G23.png",
+  ];
+
+  IMAGES_DEAD = [
+    "img/4_enemie_boss_chicken/5_dead/G24.png",
+    "img/4_enemie_boss_chicken/5_dead/G25.png",
+    "img/4_enemie_boss_chicken/5_dead/G26.png",
+  ];
+
+
+  isVisible = true;
+  isDead = false;
+  deathAnimationPlaying = false;
+  attackAnimationPlaying = false;
   height = 320;
   width = 160;
   y = 120;
+  currentImageIndex = 0;
+  hurtAnimationInterval = null;
+  deathAnimationInterval = null;
+  alertAnimationInterval = null;
+  attackAnimationInterval = null;
+  movementInterval = null;
+  percentage = 100;
+
 
   constructor() {
-    super().loadImage(this.IMAGES_WALKING[0]);
+    super();
+    this.loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
-    this.x = 719 * 8.8;
+    this.loadImages(this.IMAGES_ALERT);
+    this.loadImages(this.IMAGES_ATTACK);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_DEAD);
+    this.x = 719 * 12;
     this.animate();
+    this.hp = 100;
+    this.animationSpeed = 400; 
+    this.hurtAnimationPlaying = false;
+    this.alertAnimationPlaying = false;
+    this.attackAnimationPlaying = false;
+    this.deathAnimationPlaying = false; 
   }
 
-  animate() {
-    this.moveLeft();
+  setAnimationSpeed(speed) {
+    this.animationSpeed = speed; 
+}
 
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
-    }, 200);
+
+takeDamage(amount) {
+  this.hp -= amount;
+  if (this.hp <= 0) {
+      this.hp = 0; 
+      this.enemiesDead(); 
+  } else {
+      this.playHurtAnimation(); 
   }
 }
+
+playHurtAnimation() {
+  this.playAnimation(this.IMAGES_HURT);
+  if (this.currentImageIndex >= this.IMAGES_HURT.length - 1) {
+    this.hurtAnimationPlaying = false; 
+    clearInterval(this.hurtAnimationInterval);
+  }
+}
+
+
+enemiesDead() {
+  if (!this.isDead && !this.deathAnimationPlaying) {
+    this.isDead = true;
+    this.deathAnimationPlaying = true;
+    this.loadImages(this.IMAGES_DEAD);
+    this.playDeathAnimation(); // Sofortige Animation starten
+  }
+} 
+
+playAlertAnimation() {
+  if (!this.alertAnimationPlaying) {
+      this.alertAnimationPlaying = true; // Verhindert mehrfaches Auslösen
+      this.currentImageIndex = 0; // Setze den Index zurück
+
+      this.alertAnimationInterval = setInterval(() => {
+          this.currentImageIndex++; // Gehe zum nächsten Bild
+          if (this.currentImageIndex >= this.IMAGES_ALERT.length) {
+              this.currentImageIndex = 0; // Setze den Index zurück, wenn das Ende erreicht ist
+              this.alertAnimationPlaying = false; // Setze den Flag zurück
+              clearInterval(this.alertAnimationInterval);
+              
+              // Starte die Geh-Animation nach der Alarmanimation
+              this.playAnimation(this.IMAGES_WALKING);
+          } else {
+              this.playAnimation(this.IMAGES_ALERT); // Spiele das aktuelle Bild ab
+          }
+      }, this.animationSpeed); // Verwende die animationSpeed für die Dauer zwischen den Bildern
+  }
+}
+
+startAttackAnimation(){
+  this.playAttackAnimation();
+}
+playAttackAnimation() {
+  this.playAnimation(this.IMAGES_ATTACK);
+
+ 
+      // Setze ein Intervall, um die Animation zu überwachen
+    
+          if (this.currentImageIndex >= this.IMAGES_ATTACK.length - 1) {
+              this.attackAnimationPlaying = false; // Reset the flag
+              clearInterval(this.attackAnimationInterval);
+
+        
+          }
+      }
+
+
+playDeathAnimation() {
+  this.playAnimation(this.IMAGES_DEAD);
+  if (this.currentImageIndex >= this.IMAGES_DEAD.length - 1) {
+    this.isDead = true;
+    this.deathAnimationPlaying = false; 
+    this.isVisible = false; // Sichtbarkeit auf false setzen
+    this.stopAllAnimations(); // Alle Animationen stoppen
+  }
+}
+
+render(ctx) {
+  if (this.isVisible) {
+    super.render(ctx); // Call the parent render method if visible
+  }
+}
+
+stopAllAnimations() {
+  clearInterval(this.hurtAnimationInterval);
+  clearInterval(this.deathAnimationInterval);
+  clearInterval(this.alertAnimationInterval);
+  clearInterval(this.attackAnimationInterval);
+  clearInterval(this.movementInterval);
+}
+
+animate() {
+  this.movementInterval = setInterval(() => {
+      if (!this.isDead) {
+          this.moveLeft();
+      } else {
+          clearInterval(this.movementInterval); 
+      }
+  }, 1000 / 60);
+  
+  setInterval(() => {
+      if (!this.isDead && !this.attackAnimationPlaying && !this.alertAnimationPlaying) { // Überprüfe, ob keine andere Animation abgespielt wird
+          this.playAnimation(this.IMAGES_WALKING);
+      } 
+  }, 100); 
+
+  setInterval(() => {
+      if (!this.isDead && !this.attackAnimationPlaying) { // Überprüfe, ob die Angriffsanimation nicht abgespielt wird
+          this.playAlertAnimation(); 
+      }
+  }, 4000); // Alle 4 Sekunden
+}
+}
+
+
+  // setInterval(() => {
+  //   if (this.isDead && !this.hasDied) {
+  //     this.playDeathAnimation();
+  //     this.hasDied = true; // Setze hasDied auf true, um zu verhindern, dass die Animation erneut abgespielt wird
+  //   }
+  // }, 1000);
+
+
+   
+//   setInterval(() => {
+//     if (!this.isDead) {
+//         this.playHurtAnimation(); 
+//     }
+// }, 1000); 
+  
+
+
+// setInterval(() => {
+  //   if (!this.isDead) {
+  //       this.startAttackAnimation(); 
+  //   }
+  // }, 3000); // Attack-Animation alle 6000 ms
+
+
+
+
+
+
+//   playAlertAnimation() {
+//     if (!this.isDead && this.hp > 0) { // Nur abspielen, wenn der Boss nicht tot ist
+//         this.playAnimation(this.IMAGES_ALERT);
+//     }
+// }
+
+
+
+
+
+
+// playAttackAnimation() {
+//   if (!this.isDead && this.hp > 0) { // Nur abspielen, wenn der Boss nicht tot ist
+//       this.playAnimation(this.IMAGES_ATTACK);
+//   }
+// }
+
+
+
+
+
+
+
+
+// startHurtAnimation() {
+//   if (!this.hurtAnimationPlaying) {
+//     this.hurtAnimationPlaying = true;
+//     // Logik für die Verletzungsanimation
+//     setInterval(() => {
+//       this.playAnimation(this.IMAGES_HURT);
+//     }, this.animationSpeed);
+    
+//     setTimeout(() => {
+//       this.hurtAnimationPlaying = false; // Setze das Flag zurück, wenn die Animation beendet ist
+//     },400); // Beispiel für die Dauer der Animation
+//   }
+// }
+
+// startAlertAnimation() {
+//   clearInterval(this.alertAnimationInterval);
+  
+//   const frameDuration = 1000;
+//   const totalAnimationDuration = frameDuration * 8; 
+
+//   this.alertAnimationInterval = setInterval(() => {
+//       this.playAnimation(this.IMAGES_ALERT);
+//   }, frameDuration);
+
+//   setTimeout(() => {
+//       clearInterval(this.alertAnimationInterval);
+//   }, totalAnimationDuration); 
+// }
+
+
+// startAttackAnimation() {
+//   clearInterval(this.attackAnimationInterval);
+
+//   const frameDuration = 1000; // Zeit pro Bild in Millisekunden
+//   const totalAnimationDuration = frameDuration * this.IMAGES_ATTACK.length; // Korrigiere die Dauer
+
+//   this.attackAnimationInterval = setInterval(() => { // Ändere hier alertAnimationInterval zu attackAnimationInterval
+//       this.playAnimation(this.IMAGES_ATTACK);
+//   }, frameDuration);
+
+//   setTimeout(() => {
+//       clearInterval(this.attackAnimationInterval);
+//   }, totalAnimationDuration); 
+// }

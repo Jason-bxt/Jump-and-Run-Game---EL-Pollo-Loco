@@ -5,17 +5,22 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  font-family: 'Protest Revolution', 'Arial, sans-serif';
 }
 canvas {
   background-color: black;
   position: absolute;
   border-radius: 16px;
+  display:block;
+
 }
 
 h1 {
   position: absolute;
-  top: 60px;
-  font-size: 60px;
+  top: 0px;
+  font-size: 120px;
+  margin-top:60px;
+  font-weight:500;
 }
 .background-img {
   width: 100%;
@@ -23,23 +28,567 @@ h1 {
   background-size:cover;
 }
 
+.position-fullscreen{
+  position:absolute;
+  right: 0px;
+  top: 0px;
+  width: 128px;
+  height: 180px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
 .open-fullscreen {
-width:32px;
-height:32px;
-position:absolute;
-top:260px;
-right:600px;
-z-index: 1;
+width:40px;
+height:40px;
+color:rgb(0, 0, 0);
+position:relative;
+bottom:-88px;
+
+z-index: 1000;
 cursor:pointer;
 }
 
 .close-fullscreen {
   width:40px;
   height:40px;
-  position:absolute;
+  color:rgb(0, 0, 0);
+  /* position:relative;
   top:60px;
-  right:80px;
-  z-index: 1;
-  /* display:none; */
+  right:80px; */
+  z-index: 1000;
+  display:none;
   cursor:pointer;
+}
+.start-img {
+  position: absolute;
+  z-index: 3;
+  height: 480px;
+  width:720px;
+  border-radius:12px;
+}
+#game-over {
+  display:none;
+  width:720px;
+  height:480px;
+  position:absolute;
+  z-index: 1000;
+}
+#game-victory {
+  display:none;
+  width:720px;
+  height:480px;
+  position:absolute;
+  z-index: 1000;
+}
+
+#restart-button{
+  display:none;
+  z-index: 1001;
+  bottom:280px;
+}
+
+.mnkDark{
+  position: absolute;
+  top: 400px;
+  left: -10px;
+  height: 360px;
+  width: 300px;
+}
+
+
+.w-key{
+  position: absolute;
+  top: 442px;
+  left: 102px;
+  font-size: 34px;
+  font-weight: 600;
+  color: white;
+  z-index: 1010;
+
+}
+.a-key{
+  position: absolute;
+  top: 518px;
+  left: 50px;
+  font-size: 34px;
+  font-weight: 600;
+  color: white;
+  z-index: 1010;
+}
+.s-key{
+  position: absolute;
+  top: 518px;
+  left: 132px;
+  font-size: 34px;
+  font-weight: 600;
+  color: white;
+  z-index: 1010;
+}
+.d-key{
+  position: absolute;
+    top: 518px;
+    left: 210px;
+    font-size: 34px;
+    font-weight: 600;
+    color: white;
+    z-index: 1010;
+}
+
+
+.mnkLight{
+  position: absolute;
+  top: 384px;
+  right: -16px;
+  height: 360px;
+  width: 300px;
+}
+
+.up-key{
+  position: absolute;
+  top: 385px;
+  right: 146px;
+  color: #ffffff;
+  font-size: 52px;
+  font-weight: bold;
+  z-index: 1010;
+
+}
+.left-key{
+  position: absolute;
+  top: 472px;
+  right: 194px;
+  font-size: 52px;
+  color: #ffffff;
+  z-index: 1010;
+  font-weight: bold;
+}
+.down-key{
+  position: absolute;
+  top: 471px;
+  right: 122px;
+  font-size: 52px;
+  font-weight: bold;
+  color: white;
+  z-index: 1010;
+}
+.right-key{
+  position: absolute;
+  top: 474px;
+  right: 22px;
+  font-size: 52px;
+  font-weight: bold;
+  color: white;
+  z-index: 1010;
+}
+
+
+
+
+@media only screen and (max-width: 1320px) {
+ 
+  .mnkDark{
+    display:none;
+  }
+  .w-key{
+    display:none;
+  }
+  .a-key{
+    display:none;
+  }
+  .s-key{
+    display:none;
+  }
+  .d-key{
+    display:none;
+  } 
+  .mnkLight{
+    display:none;
+  }
+  .up-key{
+    display:none;
+  }
+  .left-key{
+    display:none;
+  }
+  .down-key{
+    display:none;
+  }
+  .right-key{
+    display:none;
+  }
+}
+
+
+@media only screen and (max-width: 720px) {
+  canvas {
+    width:100%;
+  }
+  h1 {
+    display:none;
+  }
+  .links {
+    display:none;
+  }
+ 
+}
+@media only screen and (max-height: 480px) {
+  canvas {
+    height:100vh;
+  }
+}
+
+
+
+
+
+@font-face {
+  font-family: 'Protest Revolution';
+  src: url('./font/ProtestRevolution-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.links {
+  position: absolute;
+  bottom:60px;
+  font-size: 40px;
+  font-weight: bold;
+}
+.privacy-policy {
+  color:black;
+  margin-right:100px;
+}
+.imprint {
+  color:black;
+  margin-left:100px;
+}
+
+
+
+
+.slider {
+  /* slider */
+  --slider-width: 100%;
+  --slider-height: 50px;
+  --slider-bg: #ffffffcc; /* Hintergrund auf Weiß ändern */
+  --slider-border-radius: 9px;
+  /* level */
+  --level-color: #000000; /* Slider-Farbe auf Schwarz ändern */
+  --level-transition-duration: 0.1s;
+  /* icon */
+  --icon-margin: 15px;
+  --icon-color: #000000;
+  --icon-size: 25px;
+}
+
+
+.slider {
+  position: absolute;
+  /* top:-10px;
+  right:0px; */
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.slider .volume {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: var(--icon-margin);
+  color: var(--icon-color);
+  width: var(--icon-size);
+  height: auto;
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+}
+
+.slider .level {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--slider-width);
+  height: var(--slider-height);
+  background: var(--slider-bg);
+  overflow: hidden;
+  border-radius: var(--slider-border-radius);
+  -webkit-transition: height var(--level-transition-duration);
+  -o-transition: height var(--level-transition-duration);
+  transition: height var(--level-transition-duration);
+  cursor: inherit;
+  transform: rotate(270deg);
+}
+
+.slider .level::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+  -webkit-box-shadow: -200px 0 0 200px var(--level-color); /* Schwarz */
+  box-shadow: -200px 0 0 200px var(--level-color); /* Schwarz */
+}
+.slider .level::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: -200px 0 0 200px var(--level-color); /* Schwarz */
+}
+
+
+
+
+
+
+
+
+
+
+.button {
+  --h-button: 48px;
+  --w-button: 102px;
+  --round: 0.75rem;
+  cursor: pointer;
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  background: radial-gradient(
+      65.28% 65.28% at 50% 100%,
+      rgba(255, 165, 0, 1) 0%, /* Vollständiges Orange */
+      rgba(255, 165, 0, 1) 100% /* Vollständiges Orange */
+    ),
+    linear-gradient(0deg, #ff8c00, #ff8c00); /* Dunkleres Orange */
+  border-radius: var(--round);
+  border: none;
+  outline: none;
+  padding: 12px 18px;
+  z-index: 4;
+}
+
+.button::before,
+.button::after {
+  content: "";
+  position: absolute;
+  inset: var(--space);
+  transition: all 0.5s ease-in-out;
+  border-radius: calc(var(--round) - var(--space));
+  z-index: 0;
+}
+
+.button::before {
+  --space: 1px;
+  background: linear-gradient(
+    177.95deg,
+    rgba(255, 255, 255, 0.19) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.button::after {
+  --space: 2px;
+  background: radial-gradient(
+      65.28% 65.28% at 50% 100%,
+      rgba(255, 165, 0, 1) 0%, /* Vollständiges Orange */
+      rgba(255, 165, 0, 1) 100% /* Vollständiges Orange */
+    ),
+    linear-gradient(0deg, #ff8c00, #ff8c00); /* Dunkleres Orange */
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.fold {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+  transition: all 0.5s ease-in-out;
+  background: radial-gradient(
+    100% 75% at 55%,
+    rgba(255, 165, 0, 1) 0%, /* Vollständiges Orange */
+    rgba(255, 165, 0, 1) 100% /* Vollständiges Orange */
+  );
+  box-shadow: 0 0 3px black;
+  border-bottom-left-radius: 0.5rem;
+  border-top-right-radius: var(--round);
+}
+
+.fold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150%;
+  height: 150%;
+  transform: rotate(45deg) translateX(0%) translateY(-18px);
+  background-color: #e8e8e8;
+  pointer-events: none;
+}
+
+.button:hover .fold {
+  margin-top: -1rem;
+  margin-right: -1rem;
+}
+
+.points_wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.points_wrapper .point {
+  bottom: -10px;
+  position: absolute;
+  animation: floating-points infinite ease-in-out;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 9999px;
+}
+
+@keyframes floating-points {
+  0% {
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-55px);
+    opacity: 0;
+  }
+}
+
+.points_wrapper .point:nth-child(1) {
+  left: 10%;
+  opacity: 1;
+  animation-duration: 2.35s;
+  animation-delay: 0.2s;
+}
+
+.points_wrapper .point:nth-child(2) {
+  left:  30%;
+  opacity: 0.7;
+  animation-duration: 2.5s;
+  animation-delay: 0.5s;
+}
+
+.points_wrapper .point:nth-child(3) {
+  left: 25%;
+  opacity: 0.8;
+  animation-duration: 2.2s;
+  animation-delay: 0.1s;
+}
+
+.points_wrapper .point:nth-child(4) {
+  left: 44%;
+  opacity: 0.6;
+  animation-duration: 2.05s;
+}
+
+.points_wrapper .point:nth-child(5) {
+  left: 50%;
+  opacity: 1;
+  animation-duration: 1.9s;
+}
+
+.points_wrapper .point:nth-child(6) {
+  left: 75%;
+  opacity: 0.5;
+  animation-duration: 1.5s;
+  animation-delay: 1.5s;
+}
+
+.points_wrapper .point:nth-child(7) {
+  left: 88%;
+  opacity: 0.9;
+  animation-duration: 2.2s;
+  animation-delay: 0.2s;
+}
+
+.points_wrapper .point:nth-child(8) {
+  left: 58%;
+  opacity: 0.8;
+  animation-duration: 2.25s;
+  animation-delay: 0.2s;
+}
+
+.points_wrapper .point:nth-child(9) {
+  left: 98%;
+  opacity: 0.6;
+  animation-duration: 2.6s;
+  animation-delay: 0.1s;
+}
+
+.points_wrapper .point:nth-child(10) {
+  left: 65%;
+  opacity: 1;
+  animation-duration: 2.5s;
+  animation-delay: 0.2s;
+}
+
+.inner {
+  z-index: 2;
+  gap: 6px;
+  position: relative;
+  width: 100%;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: color 0.2s ease-in-out;
+}
+
+.inner svg.icon {
+  width: 18px;
+  height: 18px;
+  transition: fill 0.1s linear;
+}
+
+.button:focus svg.icon {
+  fill: white;
+}
+
+.button:hover svg.icon {
+  fill: transparent;
+  animation:
+    dasharray 1s linear forwards,
+    filled 0.1s linear forwards 0.95s;
+}
+
+@keyframes dasharray {
+  from {
+    stroke-dasharray: 0 0 0 0;
+  }
+  to {
+    stroke-dasharray: 68 68 0 0;
+  }
+}
+
+@keyframes filled {
+  to {
+    fill: white;
+  }
 }

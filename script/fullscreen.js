@@ -27,7 +27,6 @@ document.addEventListener("MSFullscreenChange", toggleFullscreenIcons);
 
 function toggleFullscreenIcons() {
     const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-
     const openIcon = document.getElementById('open-fullscreen');
     const closeIcon = document.getElementById('close-fullscreen');
 

@@ -2,18 +2,10 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-
-
 function init(){
 canvas = document.getElementById('canvas');
 world = new World(canvas, keyboard);
-
-console.log('My Character is', world.character);
 }
-
-
-
-
 
 window.addEventListener('keydown',(e) => {
   if (e.keyCode == 39 || e.keyCode == 68) {
@@ -50,4 +42,3 @@ if (e.keyCode == 32) {
     keyboard.SPACE = false; 
 }
 });
-

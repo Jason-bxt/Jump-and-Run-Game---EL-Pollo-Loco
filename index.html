@@ -1,45 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="img/favicon_circle.png" />
 
-  <script src="models/drawable-object.js"></script>
-  <script src="models/movable-object.class.js" ></script>
-  <script src="models/character.class.js"></script>
-  <script src="models/chicken.class.js"></script>
-  <script src="models/chicken2.class.js"></script>
-  <script src="models/bottle.class.js"></script>
-  <script src="models/coin.class.js"></script>
-  <script src="models/coin-bar.class.js"></script>
-  <script src="models/bottle-bar.class.js"></script>
-  <script src="models/status-bar.class.js"></script>
-  <script src="models/cloud.class.js"></script>
-  <script src="models/world.class.js"></script>
-  <script src="models/background-object.class.js"></script>
-  <script src="models/keyboard.class.js"></script>
-  <script src="models/level.class.js"></script>
-  <script src="models/throwable-object.class.js"></script>
-  <script src="models/endboss.class.js"></script>
-  <script src="levels/level1.js"></script>
-  
-  <script src="script/game.js"></script>
+    <title>Document</title>
+    <script src="models/world.class.js"></script>
+    <script src="models/drawable-object.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/sound-regulation.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/chicken.class.js"></script>
+    <script src="models/chicken2.class.js"></script>
+    <script src="models/bottle.class.js"></script>
+    <script src="models/coin.class.js"></script>
+    <script src="models/coin-bar.class.js"></script>
+    <script src="models/bottle-bar.class.js"></script>
+    <script src="models/status-bar.class.js"></script>
+    <script src="models/endboss.class.js"></script>
+    <script src="models/endboss-bar.class.js"></script>
+    <script src="models/cloud.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="models/throwable-object.class.js"></script>
 
-</head>
-<body onload="init()">
-    <svg onclick="openFullscreen()"  viewBox="0 0 32 32" id="open-fullscreen" class="open-fullscreen" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-      <path d="M4 12 L4 4 12 4 M20 4 L28 4 28 12 M4 20 L4 28 12 28 M28 20 L28 28 20 28" />
-    </svg>
+    <script src="levels/level1.js"></script>
 
-    <svg onclick="closeFullscreen()"  viewBox="0 0 32 32" id="close-fullscreen" class="close-fullscreen" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-      <path d="M4 12 L4 4 12 4 M20 4 L28 4 28 12 M4 20 L4 28 12 28 M28 20 L28 28 20 28" />
-    </svg>
+    <script src="script/game.js"></script>
+  </head>
+
+  <body onload="init()">
+    <div class="position-fullscreen">
+      <label class="slider" id="slider">
+        <input
+          type="range"
+          class="level"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.1"
+        />
+        <svg
+          class="volume"
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="512"
+          height="512"
+          x="0"
+          y="0"
+          viewBox="0 0 24 24"
+          style="enable-background: new 0 0 512 512"
+          xml:space="preserve"
+        >
+          <g>
+            <path
+              d="M18.36 19.36a1 1 0 0 1-.705-1.71C19.167 16.148 20 14.142 20 12s-.833-4.148-2.345-5.65a1 1 0 1 1 1.41-1.419C20.958 6.812 22 9.322 22 12s-1.042 5.188-2.935 7.069a.997.997 0 0 1-.705.291z"
+              fill="currentColor"
+              data-original="#000000"
+            ></path>
+            <path
+              d="M15.53 16.53a.999.999 0 0 1-.703-1.711C15.572 14.082 16 13.054 16 12s-.428-2.082-1.173-2.819a1 1 0 1 1 1.406-1.422A6 6 0 0 1 18 12a6 6 0 0 1-1.767 4.241.996.996 0 0 1-.703.289zM12 22a1 1 0 0 1-.707-.293L6.586 17H4c-1.103 0-2-.897-2-2V9c0-1.103.897-2 2-2h2.586l4.707-4.707A.998.998 0 0 1 13 3v18a1 1 0 0 1-1 1z"
+              fill="currentColor"
+              data-original="#000000"
+            ></path>
+          </g>
+        </svg>
+      </label>
+
+      <svg
+        onclick="openFullscreen()"
+        viewBox="0 0 32 32"
+        id="open-fullscreen"
+        class="open-fullscreen"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        stroke="currentcolor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        width="48"
+        <!--
+        Breite
+        auf
+        48px
+        setzen
+        --
+      >
+        >
+        <path
+          d="M4 12 L4 4 12 4 M20 4 L28 4 28 12 M4 20 L4 28 12 28 M28 20 L28 28 20 28"
+        />
+      </svg>
+
+      <svg
+        onclick="closeFullscreen()"
+        viewBox="0 0 32 32"
+        id="close-fullscreen"
+        class="close-fullscreen"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        stroke="currentcolor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        width="48"
+        <!--
+        Breite
+        auf
+        48px
+        setzen
+        --
+      >
+        >
+        <path
+          d="M4 12 L4 4 12 4 M20 4 L28 4 28 12 M4 20 L4 28 12 28 M28 20 L28 28 20 28"
+        />
+      </svg>
+    </div>
+
+    <button type="button" id="start-button" class="button">
+      <span class="fold"></span>
+
+      <div class="points_wrapper">
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+      </div>
+
+      <span class="inner"
+        ><svg
+          class="icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+        >
+          <polyline
+            points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"
+          ></polyline></svg
+        >START GAME</span
+      >
+    </button>
+
+    <button type="button" id="restart-button" class="button">
+      <span class="fold"></span>
+
+      <div class="points_wrapper">
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+        <i class="point"></i>
+      </div>
+
+      <span class="inner"
+        ><svg
+          class="icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+        >
+          <polyline
+            points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"
+          ></polyline></svg
+        >RESTART GAME</span
+      >
+    </button>
+
+    <img
+      id="game-over"
+      src="img/9_intro_outro_screens/game_over/game over.png"
+      alt=""
+    />
+
+    <img
+      id="game-victory"
+      src="img/9_intro_outro_screens/win/won_2.png"
+      alt=""
+    />
+
+    <img
+      class="start-img"
+      src="img/9_intro_outro_screens/start/startscreen_2.png"
+      alt=""
+    />
 
     <h1>El Pollo loco</h1>
-    <img class="background-img" src="img/5_background/mexican-background.jfif" alt="">
     <canvas id="canvas" width="720" height="480"></canvas>
+
+    <div class="links">
+      <a class="privacy-policy" href="privacy-policy/privacy.html"
+        >Privacy Policy</a
+      >
+      <a class="imprint" href="Imprint/Imprint.html">Imprint</a>
+    </div>
+
+    <div class="mnk-dark-div">
+      <svg
+      class="mnkDark"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      x="0px"
+      y="0px"
+      viewBox="0 0 100 125"
+      style="enable-background: new 0 0 100 100"
+      xml:space="preserve"
+    >
+      <style type="text/css">
+        .st0 {
+          display: none;
+        }
+      </style>
+      <g>
+        <g>
+          <g>
+            <path
+              d="M51.14,25h-0.02c0.48,0.64,0.78,1.42,0.78,2.28v12.17c0,2.1-1.71,3.8-3.8,3.8H35.92c-2.1,0-3.8-1.71-3.8-3.8V27.28     c0-0.86,0.3-1.64,0.78-2.28h-0.02c-1.26,0-2.28,1.02-2.28,2.28v18.26c0,1.26,1.02,2.28,2.28,2.28h18.26     c1.26,0,2.28-1.02,2.28-2.28V27.28C53.42,26.02,52.4,25,51.14,25z"
+            />
+            <path
+              d="M50.38,27.28v12.18c0,1.26-1.02,2.28-2.28,2.28H35.92c-1.26,0-2.28-1.02-2.28-2.28V27.28c0-1.26,1.02-2.28,2.28-2.28     H48.1C49.36,25,50.38,26.02,50.38,27.28z"
+            />
+          </g>
+          <g>
+            <path
+              d="M58.37,54.45v12.18c0,1.26-1.02,2.28-2.28,2.28H43.91c-1.26,0-2.28-1.02-2.28-2.28V54.45c0-1.25,1.02-2.28,2.28-2.28     h12.18C57.35,52.17,58.37,53.2,58.37,54.45z"
+            />
+            <path
+              d="M59.13,52.17h-0.02c0.48,0.64,0.78,1.42,0.78,2.28v12.17c0,2.1-1.71,3.8-3.8,3.8H43.91c-2.1,0-3.8-1.71-3.8-3.8V54.45     c0-0.86,0.3-1.64,0.78-2.28h-0.02c-1.26,0-2.28,1.02-2.28,2.28v18.26c0,1.26,1.02,2.28,2.28,2.28h18.26     c1.26,0,2.28-1.02,2.28-2.28V54.45C61.41,53.2,60.39,52.17,59.13,52.17z"
+            />
+          </g>
+          <g>
+            <path
+              d="M30.85,54.45v12.18c0,1.26-1.02,2.28-2.28,2.28H16.39c-1.26,0-2.28-1.02-2.28-2.28V54.45c0-1.25,1.02-2.28,2.28-2.28     h12.18C29.83,52.17,30.85,53.2,30.85,54.45z"
+            />
+            <path
+              d="M31.61,52.17h-0.02c0.48,0.64,0.78,1.42,0.78,2.28v12.17c0,2.1-1.71,3.8-3.8,3.8H16.39c-2.1,0-3.8-1.71-3.8-3.8V54.45     c0-0.86,0.3-1.64,0.78-2.28h-0.02c-1.26,0-2.28,1.02-2.28,2.28v18.26c0,1.26,1.02,2.28,2.28,2.28h18.26     c1.26,0,2.28-1.02,2.28-2.28V54.45C33.89,53.2,32.87,52.17,31.61,52.17z"
+            />
+          </g>
+          <g>
+            <path
+              d="M86.65,52.17h-0.02c0.48,0.64,0.78,1.42,0.78,2.28v12.17c0,2.1-1.71,3.8-3.8,3.8H71.43c-2.1,0-3.8-1.71-3.8-3.8V54.45     c0-0.86,0.3-1.64,0.78-2.28h-0.02c-1.26,0-2.28,1.02-2.28,2.28v18.26c0,1.26,1.02,2.28,2.28,2.28h18.26     c1.26,0,2.28-1.02,2.28-2.28V54.45C88.93,53.2,87.91,52.17,86.65,52.17z"
+            />
+            <path
+              d="M85.89,54.45v12.18c0,1.26-1.02,2.28-2.28,2.28H71.43c-1.26,0-2.28-1.02-2.28-2.28V54.45c0-1.25,1.02-2.28,2.28-2.28     h12.18C84.87,52.17,85.89,53.2,85.89,54.45z"
+            />
+          </g>
+        </g>
+      </g>
+      <text
+        x="0"
+        y="115"
+        fill="#000000"
+        font-size="5px"
+        font-weight="bold"
+        font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"
+      >
+    
+      </text>
+      <text
+        x="0"
+        y="120"
+        fill="#000000"
+        font-size="5px"
+        font-weight="bold"
+        font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"
+      >
+      </text>
+    </svg>
+
+    <p class="w-key">W</p>
+    <p class="a-key">A</p>
+    <p class="s-key">S</p>
+    <p class="d-key">D</p>
+    </div>
+    
+
+
+<div class="mnk-light-div">
+  <svg
+      class="mnkLight"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      x="0px"
+      y="0px"
+      viewBox="0 0 100 125"
+      style="enable-background: new 0 0 100 100"
+      xml:space="preserve"
+    >
+      <style type="text/css">
+        .st0 {
+          display: none;
+        }
+      </style>
+      <g>
+        <g>
+          <path
+            d="M51.24,21.25h-19.8c-2.27,0-4.12,1.85-4.12,4.12v19.8c0,2.28,1.85,4.13,4.12,4.13h19.8c2.27,0,4.12-1.85,4.12-4.13v-19.8    C55.36,23.1,53.51,21.25,51.24,21.25z M32.27,25.37c0-1.36,1.11-2.47,2.47-2.47h13.2c1.36,0,2.47,1.11,2.47,2.47v13.2    c0,1.37-1.11,2.48-2.47,2.48h-13.2c-1.36,0-2.47-1.11-2.47-2.48V25.37z M53.71,45.17c0,1.37-1.11,2.48-2.47,2.48h-19.8    c-1.36,0-2.47-1.11-2.47-2.48v-19.8c0-1.36,1.11-2.47,2.47-2.47h0.02c-0.52,0.69-0.84,1.54-0.84,2.47v13.2    c0,2.28,1.85,4.13,4.12,4.13h13.2c2.27,0,4.12-1.85,4.12-4.13v-13.2c0-0.93-0.32-1.78-0.84-2.47h0.02c1.36,0,2.47,1.11,2.47,2.47    V45.17z"
+          />
+          <path
+            d="M59.9,50.7H40.1c-2.27,0-4.12,1.85-4.12,4.13v19.8c0,2.27,1.85,4.12,4.12,4.12h19.8c2.27,0,4.12-1.85,4.12-4.12v-19.8    C64.02,52.55,62.17,50.7,59.9,50.7z M40.93,54.83c0-1.37,1.11-2.48,2.47-2.48h13.2c1.36,0,2.47,1.11,2.47,2.48v13.2    c0,1.36-1.11,2.47-2.47,2.47H43.4c-1.36,0-2.47-1.11-2.47-2.47V54.83z M62.37,74.63c0,1.36-1.11,2.47-2.47,2.47H40.1    c-1.36,0-2.47-1.11-2.47-2.47v-19.8c0-1.37,1.11-2.48,2.47-2.48h0.02c-0.52,0.7-0.84,1.55-0.84,2.48v13.2    c0,2.27,1.85,4.12,4.12,4.12h13.2c2.27,0,4.12-1.85,4.12-4.12v-13.2c0-0.93-0.32-1.78-0.84-2.48h0.02c1.36,0,2.47,1.11,2.47,2.48    V74.63z"
+          />
+          <path
+            d="M89.73,50.7h-19.8c-2.27,0-4.12,1.85-4.12,4.13v19.8c0,2.27,1.85,4.12,4.12,4.12h19.8c2.27,0,4.13-1.85,4.13-4.12v-19.8    C93.86,52.55,92,50.7,89.73,50.7z M70.76,54.83c0-1.37,1.11-2.48,2.47-2.48h13.2c1.37,0,2.48,1.11,2.48,2.48v13.2    c0,1.36-1.11,2.47-2.48,2.47h-13.2c-1.36,0-2.47-1.11-2.47-2.47V54.83z M92.21,74.63c0,1.36-1.11,2.47-2.48,2.47h-19.8    c-1.36,0-2.47-1.11-2.47-2.47v-19.8c0-1.37,1.11-2.48,2.47-2.48h0.03c-0.53,0.7-0.85,1.55-0.85,2.48v13.2    c0,2.27,1.85,4.12,4.12,4.12h13.2c2.28,0,4.13-1.85,4.13-4.12v-13.2c0-0.93-0.33-1.78-0.85-2.48h0.02c1.37,0,2.48,1.11,2.48,2.48    V74.63z"
+          />
+          <path
+            d="M30.07,50.7h-19.8c-2.27,0-4.13,1.85-4.13,4.13v19.8c0,2.27,1.86,4.12,4.13,4.12h19.8c2.27,0,4.12-1.85,4.12-4.12v-19.8    C34.19,52.55,32.34,50.7,30.07,50.7z M11.09,54.83c0-1.37,1.11-2.48,2.48-2.48h13.2c1.36,0,2.47,1.11,2.47,2.48v13.2    c0,1.36-1.11,2.47-2.47,2.47h-13.2c-1.37,0-2.48-1.11-2.48-2.47V54.83z M32.54,74.63c0,1.36-1.11,2.47-2.47,2.47h-19.8    c-1.37,0-2.48-1.11-2.48-2.47v-19.8c0-1.37,1.11-2.48,2.48-2.48h0.02c-0.52,0.7-0.85,1.55-0.85,2.48v13.2    c0,2.27,1.85,4.12,4.13,4.12h13.2c2.27,0,4.12-1.85,4.12-4.12v-13.2c0-0.93-0.32-1.78-0.85-2.48h0.03c1.36,0,2.47,1.11,2.47,2.48    V74.63z"
+          />
+        </g>
+      </g>
+      <text
+        x="0"
+        y="115"
+        fill="#000000"
+        font-size="5px"
+        font-weight="bold"
+        font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"
+      >
+    
+      </text>
+      <text
+        x="0"
+        y="120"
+        fill="#000000"
+        font-size="5px"
+        font-weight="bold"
+        font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"
+      >
+
+      </text>
+    </svg>
+
+    <p class="up-key">&#8593;</p>
+    <p class="left-key">&#8592;</p>
+    <p class="down-key">&#8595;</p>
+    <p class="right-key">&#8594;</p>
+</div>
+    
+
+
+
+
+
+    <img
+      class="background-img"
+      src="img/5_background/background-img-2.webp"
+      alt=""
+    />
+
     <script src="script/fullscreen.js"></script>
-</body>
+  </body>
 </html>
