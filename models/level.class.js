@@ -14,4 +14,5 @@ class Level {
     this.bottles = bottles; 
     this.coines = coines; 
   }
+  
 }
