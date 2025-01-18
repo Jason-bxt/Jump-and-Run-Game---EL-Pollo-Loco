@@ -1,4 +1,10 @@
-const level1 = new Level(
+let level1;
+function initLevel(){
+
+level1 = new Level(
+  [
+    new Endboss()
+  ],
   [
     new Chicken(),
     new Chicken(),
@@ -10,18 +16,14 @@ const level1 = new Level(
     new Chicken(),
     new Chicken(),
 
-    new Chicken(),
-    new Chicken(),
-
     new Chicken2(),
     new Chicken2(),
-    new Chicken2(),
-
-    new Chicken2(),
+    
     new Chicken2(),
     new Chicken2(),
 
-    new Endboss(),
+    new Chicken2(),
+    new Chicken2(),
   ],
   [
     new Cloud(),
@@ -100,6 +102,39 @@ const level1 = new Level(
     new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 9),
     new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 9),
     new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 9),
+
+    new BackgroundObject('img/5_background/layers/air.png', 719 * 10),
+    new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 10),
+    new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 10),
+    new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 10),
+
+  
+    new BackgroundObject('img/5_background/layers/air.png', 719 *11),
+    new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 11),
+    new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 11),
+    new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 11),
+
+    new BackgroundObject('img/5_background/layers/air.png', 719 * 12),
+    new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 12),
+    new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 12),
+    new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 12),
+
+  
+    new BackgroundObject('img/5_background/layers/air.png', 719 *13),
+    new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 13),
+    new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 13),
+    new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 13),
+
+    new BackgroundObject('img/5_background/layers/air.png', 719 * 14),
+    new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 14),
+    new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 14),
+    new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 14),
+
+  
+    new BackgroundObject('img/5_background/layers/air.png', 719 *15),
+    new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 15),
+    new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 15),
+    new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 15),
   ],
   [
     new Bottle(),
@@ -114,13 +149,8 @@ const level1 = new Level(
 
     new Bottle(),
     new Bottle(),
-    new Bottle(),
-    new Bottle(),
 
-    new Bottle(),
-    new Bottle(),
-    new Bottle(),
-    new Bottle(),
+    
   ],
   [
     new Coin(),
@@ -148,9 +178,7 @@ const level1 = new Level(
     new Coin(),
     new Coin(),
 
-    new Coin(),
-    new Coin(),
-    new Coin(),
-    new Coin(),
+
   ]
 );
+}

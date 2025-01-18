@@ -8,7 +8,7 @@ class DrawableObject {
     this.img.src = path;
   }
 
-  draw(ctx){
+  draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
