@@ -221,3 +221,107 @@ class Endboss extends MovableObject {
     }, 4000); 
   }
 }
+
+playHurtAnimation() {
+  this.playAnimation(this.IMAGES_HURT);
+  if (this.currentImageIndex >= this.IMAGES_HURT.length - 1) {
+    this.hurtAnimationPlaying = false; 
+    clearInterval(this.hurtAnimationInterval);
+  }
+}
+
+
+enemiesDead() {
+  if (!this.isDead && !this.deathAnimationPlaying) {
+    this.isDead = true;
+    this.deathAnimationPlaying = true;
+    this.loadImages(this.IMAGES_DEAD);
+    this.playDeathAnimation(); // Sofortige Animation starten
+  }
+} 
+
+playAlertAnimation() {
+  if (!this.alertAnimationPlaying) {
+      this.alertAnimationPlaying = true; // Verhindert mehrfaches Auslösen
+      this.currentImageIndex = 0; // Setze den Index zurück
+
+      this.alertAnimationInterval = setInterval(() => {
+          this.currentImageIndex++; // Gehe zum nächsten Bild
+          if (this.currentImageIndex >= this.IMAGES_ALERT.length) {
+              this.currentImageIndex = 0; // Setze den Index zurück, wenn das Ende erreicht ist
+              this.alertAnimationPlaying = false; // Setze den Flag zurück
+              clearInterval(this.alertAnimationInterval);
+              
+              // Starte die Geh-Animation nach der Alarmanimation
+              this.playAnimation(this.IMAGES_WALKING);
+          } else {
+              this.playAnimation(this.IMAGES_ALERT); // Spiele das aktuelle Bild ab
+          }
+      }, this.animationSpeed); // Verwende die animationSpeed für die Dauer zwischen den Bildern
+  }
+}
+
+startAttackAnimation(){
+  this.playAttackAnimation();
+}
+playAttackAnimation() {
+  this.playAnimation(this.IMAGES_ATTACK);
+
+ 
+      // Setze ein Intervall, um die Animation zu überwachen
+    
+          if (this.currentImageIndex >= this.IMAGES_ATTACK.length - 1) {
+              this.attackAnimationPlaying = false; // Reset the flag
+              clearInterval(this.attackAnimationInterval);
+
+        
+          }
+      }
+
+
+playDeathAnimation() {
+  this.playAnimation(this.IMAGES_DEAD);
+  if (this.currentImageIndex >= this.IMAGES_DEAD.length - 1) {
+    this.isDead = true;
+    this.deathAnimationPlaying = false; 
+    this.isVisible = false; // Sichtbarkeit auf false setzen
+    this.stopAllAnimations(); // Alle Animationen stoppen
+  }
+}
+
+render(ctx) {
+  if (this.isVisible) {
+    super.render(ctx); // Call the parent render method if visible
+  }
+}
+
+stopAllAnimations() {
+  clearInterval(this.hurtAnimationInterval);
+  clearInterval(this.deathAnimationInterval);
+  clearInterval(this.alertAnimationInterval);
+  clearInterval(this.attackAnimationInterval);
+  clearInterval(this.movementInterval);
+}
+
+animate() {
+  this.movementInterval = setInterval(() => {
+      if (!this.isDead) {
+          this.moveLeft();
+      } else {
+          clearInterval(this.movementInterval); 
+      }
+  }, 1000 / 60);
+  
+  setInterval(() => {
+      if (!this.isDead && !this.attackAnimationPlaying && !this.alertAnimationPlaying) { // Überprüfe, ob keine andere Animation abgespielt wird
+          this.playAnimation(this.IMAGES_WALKING);
+      } 
+  }, 100); 
+
+  setInterval(() => {
+      if (!this.isDead && !this.attackAnimationPlaying) { // Überprüfe, ob die Angriffsanimation nicht abgespielt wird
+          this.playAlertAnimation(); 
+      }
+  }, 4000); // Alle 4 Sekunden
+}
+}
